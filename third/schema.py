@@ -1,6 +1,7 @@
 import graphene
 from graphene_django.types import DjangoObjectType
 from accounts.models import MyUser
+import graphql_jwt
 
 class MyUserType(DjangoObjectType):
     class Meta:
@@ -12,4 +13,11 @@ class Query(graphene.ObjectType):
     def resolve_all_users(root, info):
         return MyUser.objects.all()
 
-schema = graphene.Schema(query=Query)
+
+
+class Mutation(graphene.ObjectType):
+    token_auth = graphql_jwt.ObtainJSONWebToken.Field()
+    verify_token = graphql_jwt.Verify.Field()
+    refresh_token = graphql_jwt.Refresh.Field()
+
+schema = graphene.Schema(query=Query, mutation=Mutation)

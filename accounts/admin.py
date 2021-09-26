@@ -17,6 +17,7 @@ class UserCreationForm(forms.ModelForm):
         model = MyUser
         fields = ('email', 'date_of_birth', 'is_active', 'is_admin', 'bio', 'location', 'phone_number')
 
+
     def clean_password2(self):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
